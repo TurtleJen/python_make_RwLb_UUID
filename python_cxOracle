@@ -1,0 +1,108 @@
+import cx_Oracle
+from sys import modules
+
+# set and build connection
+connect_str = u'connect_URL'
+connection = cx_Oracle.connect(connect_str)
+cursor = connection.cursor()
+
+# update data
+statement = ("UPDATE table_name code = :1 WHERE code = :2")
+cursor.execute(statement, ('1-DOC-2017-11-00011', '1-DOC-2017-77-00077'))
+connection.commit()
+
+# print result to check
+cursor.execute(u'select CODE, DN_CARDNO, REMARK from table_name')
+for row in cursor:
+    print row[0], "-", row[1].encode('utf8'), row[2].encode('utf8')
+
+# close connection
+connection.close()
+
+
+#--------------------------------------note below---------------------------------------------------
+'''
+bind_values = {"status" : str(status),
+                 "todays_date" : todays_date,
+                 "keys_list" : list_of_keys}
+
+query = ("""FORALL i IN :keys_list.FIRST .. :keys_list.LAST
+              UPDATE TABLE_NAME
+              SET COLUMN1 = :status,
+              UPDATE_DATE = :todays_date
+              WHERE KEY = :i""")
+
+cursor.execute(query, bind_values)
+'''
+#-------------SAMPLE CODE-------------------------------------
+#-------------select--------------------------------
+# import cx_Oracle
+# 
+# conn_str = u'user/password@host:port/service'
+# conn = cx_Oracle.connect(conn_str)
+# c = conn.cursor()
+# c.execute(u'select your_col_1, your_col_2 from your_table')
+# for row in c:
+#    print row[0], "-", row[1]
+# conn.close()
+#--------------------------------------------------
+
+#----------------creat table and insert------------
+# create_table = """
+# CREATE TABLE python_modules (
+# module_name VARCHAR2(50) NOT NULL,
+# file_path VARCHAR2(300) NOT NULL
+# )
+# """
+# from sys import modules
+# cursor.execute(create_table)
+
+# M = []
+# for m_name, m_info in modules.items():
+#     try:
+#     M.append((m_name, m_info.__file__))
+#     except AttributeError:
+#     pass
+# len(M)
+# cursor.prepare("INSERT INTO python_modules(module_name, file_path) VALUES (:1, :2)")
+# cursor.executemany(None, M)
+# db.commit()
+# r = cursor.execute("SELECT COUNT(*) FROM python_modules")
+# print cursor.fetchone()
+
+
+#---------------------source------------------------
+#    http://www.oracle.com/technetwork/cn/articles/dsl/prez-python-queries-101587-zhs.html
+#    https://stackoverflow.com/questions/3521692/how-can-i-access-oracle-from-python
+#  about update
+#    https://www.laurivan.com/upsert-update-or-insert-in-oracle-with-python/
+#    https://stackoverflow.com/questions/20915308/bulk-update-sql-oracle-with-python
+#  useful blog of cx_Oracle
+#    https://learncodeshare.net/2015/06/26/insert-crud-using-cx_oracle/
+#  insert rows
+#    http://thepythonguru.com/inserting-rows/
+#--------------------------------------------------
+
+#-------print select result---------------------success
+# cursor.execute(u'select CODE, DN_CARDNO, REMARK from table_name')
+# for row in cursor:
+#     print row[0], "-", row[1].encode('utf8')
+#-----------------------------------------------
+
+#---------------insert rows---------------------failed!
+# Data = [
+#     ('001', '97000032999', '0612test01', '', '24ca6b6475554666a6bf5842f3efc20b', 'TTtest', to_date('2017-06-01','YYYY-MM-DD'), 0, '1','', '', '', '', '', ''), 
+#     ('002', '97000032999', '0612test02', '', '24ca6b6475554666a6bf5842f3efc20b', 'TTtest', to_date('2017-06-01','YYYY-MM-DD'), 0, '1','', '', '', '', '', '')
+# ]
+# cursor.executemany("INSERT INTO table_name(CODE, DN_CARDNO, REMARK, DIAGNOSIS_DATE, FILE_TYPE, CREATED_USER, CREATED_DATE, DELETED, CREATED_CENTER, UPDATED_USER, UPDATED_DATE, UPDATED_CENTER, RES_ID, SRC_TYP, SRC_NO) VALUES (:1, :2, :3, :4, :5, :6, :7, :8, :9, :10, :11, :12, :13, :14, :15)", Data)
+# db.commit()
+#-----------------------------------------------
+
+#-----------update data-------------------------success
+# statement = "UPDATE table_name SET code = :1 WHERE code = :2"
+# cursor.execute(statement, ('1-DOC-2017-99-00099', '1-DOC-2017-98-00099'))
+# connection.commit()
+#-----------------------------------------------
+
+# executemany("insert into cx_people(id, name, age, notes) values (:1, :2, :3, :4)", rows)
+
