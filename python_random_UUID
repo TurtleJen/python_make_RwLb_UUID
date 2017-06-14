@@ -1,0 +1,28 @@
+'''
+#-----------------Way 1 ------------------------
+import string
+import random
+def id_generator(size=6, chars=string.ascii_uppercase + string.digits): # use A-Z and 0-9
+    return ''.join(random.choice(chars) for _ in range(size))
+print(id_generator())
+'''
+
+#-----------------Way 2 ------------------------better
+import uuid
+
+def my_random_uuid(string_length=32):
+    """Returns a random string of length string_length."""
+    random = str(uuid.uuid4()) # Convert UUID format to a Python string.
+#    random = random.upper() # Make all characters uppercase.
+    random = random.replace("-","") # Remove the UUID '-'.
+    return random[0:string_length] # Return the random string.
+
+print(my_random_string()) # For example, D9E50C
+
+# print(my_random_uuid(50)) # For example, D9E50C
+
+
+#  souce
+#    http://www.victorgau.com/?p=5494
+#    https://stackoverflow.com/questions/2257441/random-string-generation-with-upper-case-letters-and-digits-in-python
+#    https://dotblogs.com.tw/chris0920/2010/10/25/18560
