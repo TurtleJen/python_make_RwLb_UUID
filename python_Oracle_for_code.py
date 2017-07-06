@@ -9,6 +9,8 @@ def my_random_uuid(string_length=32):
 
 print(my_random_uuid())
 
+# 將亂數ID List更新至 CODE欄位------------------------------undo
+
 #-----------connect to database and set SQL---------------
 import cx_Oracle
 from sys import modules
@@ -19,9 +21,11 @@ connection = cx_Oracle.connect(connect_str)
 cursor = connection.cursor()
 
 #-----------------------查出欄位值------------------------undo
+row_list=[]
 cursor.execute(u'select CODE, DN_CARDNO, REMARK from table_name')
 for row in cursor:
-    print row[0], row[1].encode('utf8'), row[2].encode('utf8')
+    row_list.append(list(row))
+print row_list
 
 #-------塞進陣列集合，增加一個值是兩欄位相加中間底線------undo
 data_set={row_list}
