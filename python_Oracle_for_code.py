@@ -20,19 +20,21 @@ connect_str = u'TNS'
 connection = cx_Oracle.connect(connect_str)
 cursor = connection.cursor()
 
-#-----------------------查出欄位值------------------------undo
+#-----------------------查出欄位值------------------------編碼undo
 row_list=[]
 cursor.execute(u'select CODE, DN_CARDNO, REMARK from table_name')
 for row in cursor:
     row_list.append(list(row))
 print row_list
 
-#-------塞進陣列集合，增加一個值是兩欄位相加中間底線------undo
-data_set={row_list}
-row_list=[]
 
-
-data_set.add(row_list)
+#-------塞進陣列集合，增加一個值是兩欄位相加中間底線------
+print row_list[0][0]+"-"+row_list[0][1]
+row_list[0][2] = row_list[0][0]+"-"+row_list[0][1]
+print row_list[0]
+# row_list = list.append(row)
+# row_list[3] = row_list[0]+row_list[1]
+# print ("    "),row_list
 
 #--------------------將陣列update進table------------------undo
 # update data
