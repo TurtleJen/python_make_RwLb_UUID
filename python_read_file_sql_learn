@@ -1,6 +1,6 @@
 #----source---------------------------
 # https://stackoverflow.com/questions/19472922/reading-external-sql-script-in-python
-
+# https://www.quora.com/How-can-I-execute-a-sql-file-in-Python
 
 #----sample code---------------------------
 import sqlite3
